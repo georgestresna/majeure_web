@@ -165,6 +165,7 @@
                 <pre><code id="rawJsonOutput" class="text-emerald-400 text-xs font-mono leading-relaxed"></code></pre>
             </div>
         </div>
+        <div class="p"></div>
 
     </section>
 
@@ -189,7 +190,7 @@
 
             try {
                 // 1. Fetch INSTANT NBA Data
-                const response = await fetch(`http://localhost:5000/api/search?name=${query}`);
+                const response = await fetch(`http://192.168.0.2:5000/api/search?name=${query}`);
                 const data = await response.json();
 
                 jsonConsole.classList.remove('hidden');
@@ -217,7 +218,7 @@
                 // 2. Trigger ASYNC AI Generation
                 aiScoutReport.innerHTML = '<span class="animate-pulse text-emerald-400/70 font-mono text-xs tracking-wider">INITIALISATION DU MODÈLE LLAMA 3.2...</span>';
 
-                fetch('http://localhost:5000/api/ai-scout', {
+                fetch('http://192.168.0.2:5000/api/ai-scout', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
