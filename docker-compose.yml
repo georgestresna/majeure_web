@@ -1,0 +1,43 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "8080:8080"   # Public Website Port
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./certs:/etc/nginx/certs
+    depends_on:
+      - website
+      - web-api
+
+  # --- Python Backend API ---
+  web-api:
+    build: ./web-api
+    container_name: web
+    restart: always
+    ports:
+      - "5000:5000"
+
+  # --- Static HTML Frontend ---
+  website:
+    image: nginx:alpine
+    container_name: website
+    restart: always
+    volumes:
+      - ./website:/usr/share/nginx/html:ro
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ollama
+    restart: always
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_data:/root/.ollama
+
+volumes:
+  ollama_data:
